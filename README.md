@@ -15,3 +15,18 @@ Rozbuduj zadanie w taki sposób, aby:
  * - po kliknięciu na wiersz z danymi - obiekt został usunięty ze stanu aplikacji, a DOM został zaktualizowany
  * - dodaj możliwość edycji danych
  * - dodaj CSS
+
+1. usuwanie
+- dodanie identyfikatora do elementu P
+- dodanie eventu na kontener (liste elementow)
+- nasluchiwanie na kontenerze ktory element zostal klikniety (event.target)
+- wywolanie odpiednich funkcji po kliku na element
+- bardziej zaawansowana forma: po kliku na element pytamy czy na pewno go usunac
+
+2. edycja
+- rozszerzenie konstruktora klasy User (isEdited (boolean))
+- dodanie przycisku "edit" obok kazdego elementu na liscie
+- klik przycisku - zmiana stanu w obiekcie
+- na podstawie zmiany stanu renderujemy tekst lub inputy do edycji z buttonem do zapisu
+- jezeli cancel - wracamy do poprzedniego stanu
+- jezeli save - zapisujemy zmiany i odswiezamy DOM
