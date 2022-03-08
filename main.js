@@ -52,19 +52,26 @@ const onGetUserDataButtonClick = () => {
         const { id, name, username, email, address} = data;
         const user = new User(id, name, username, email, address);
        
-        currentStateOfApplication.addUser(user); // OK
+        currentStateOfApplication.addUser(user);
           
-        updateUserIdToHtml(id); //to do
-        addUserToHtml(user, userList); //to do
+        updateUserIdToHtml(id); 
+        addUserToHtml(user/*, userList*/);
       })
       .catch((error) => console.log(`${error}`));
 };
 
   getUserDataButton.addEventListener("click", onGetUserDataButtonClick);
 
-  function updateUserIdToHtml() {}; //to do
+  function updateUserIdToHtml(id) {
+      currentUserId.innerHTML = id; 
+  }; 
 
-  function addUserToHtml() {}; //to do
+  function addUserToHtml(user) {
+      const {id, name, username} = user;
+      const userHtmlElement = document.createElement("li");
+      userList.appendChild(userHtmlElement);
+      userHtmlElement.innerHTML = `#${user.id}: ${user.name} ${user.username}`;
+  }; 
 
 
 
