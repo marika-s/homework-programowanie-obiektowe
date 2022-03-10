@@ -43,8 +43,6 @@ const getUserDataButton = document.getElementById("getUserDataButton");
 const userList = document.getElementById("usersList");
 const currentUserId = document.getElementById("currentUserId");
 
-
-
 const onGetUserDataButtonClick = () => {
     fetch(`https://jsonplaceholder.typicode.com/users/${currentStateOfApplication.userId}`)
       .then((response) => response.json())
@@ -55,7 +53,7 @@ const onGetUserDataButtonClick = () => {
         currentStateOfApplication.addUser(user);
           
         updateUserIdToHtml(id); 
-        addUserToHtml(user/*, userList*/);
+        addUserToHtml(user);
       })
       .catch((error) => console.log(`${error}`));
 };
@@ -67,11 +65,31 @@ const onGetUserDataButtonClick = () => {
   }; 
 
   function addUserToHtml(user) {
-      const {id, name, username} = user;
       const userHtmlElement = document.createElement("li");
       userList.appendChild(userHtmlElement);
-      userHtmlElement.innerHTML = `#${user.id}: ${user.name} ${user.username}`;
+      userHtmlElement.innerHTML = `<p id="user-id${user.id}">#${user.id}: ${user.name} ${user.username} </p>`;
   }; 
+
+// Homework
+
+function removeClickedUser(event) {    
+    const clickedUser = event.target.id; 
+    const clickedUserId = document.getElementById(`${clickedUser}`);
+    clickedUserId.parentNode.remove();
+    
+    
+
+
+    //deleteUserfromAplicationState();
+   
+};
+
+userList.addEventListener("click", removeClickedUser);
+
+
+
+
+
 
 
 
