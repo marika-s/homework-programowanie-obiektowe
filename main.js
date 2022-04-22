@@ -73,21 +73,25 @@ function addUserToHtml(user) {
 }
 
 // Homework
+// 1. usuwanie
 
 function removeClickedUser(event) {
-  const clickedUser = event.target.id;
-  const clickedUserTag = document.getElementById(clickedUser);
-  clickedUserTag.parentNode.remove();
+  if (confirm("Are you sure you want to remove this user?") == true) {
+    const clickedUser = event.target.id;
+    const clickedUserTag = document.getElementById(clickedUser);
+    clickedUserTag.parentNode.remove();
 
-  const userID = clickedUser.match(/\d/g).join(""); // jak tu zrobić destrukturyzacją? w clickedUser dostaję identyfikator, np. user-id1 i chciałabym się dobrać do 1. Tu poległam.
-  const userIdAsNumber = userID * 1;
-  removeUserFromApplicationState();
+    const userID = clickedUser.match(/\d/g).join(""); // z np.user-id1 wybieram cyfry, żeby mieć ID usera z tablicy currentStateOfApplication do usunięcia; ewentualny join, jeżeli liczba będzie dwucyfrowa
+    const userIdAsNumber = userID * 1;
+    removeUserFromApplicationState();
 
-  function removeUserFromApplicationState() {
-    let indexToRemove = currentStateOfApplication.listOfUsers.findIndex(
-      (data) => data.id === userIdAsNumber
-    );
-    currentStateOfApplication.listOfUsers.splice(indexToRemove, 1);
+    function removeUserFromApplicationState() {
+      let indexToRemove = currentStateOfApplication.listOfUsers.findIndex( //wyszukuje index z tablicy obiektów z szukanym ID usera
+        (data) => data.id === userIdAsNumber
+      );
+      currentStateOfApplication.listOfUsers.splice(indexToRemove, 1); // usunięcie usera z currentStateOfApplication
+    }
   }
 }
 userList.addEventListener("click", removeClickedUser);
+
