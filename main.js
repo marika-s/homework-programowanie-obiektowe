@@ -27,6 +27,7 @@ class User {
     this.username = username;
     this.email = email;
     this.address = address;
+    this.isEdited = false; // homework
   }
   get fullName() {
     return `${this.name} ${this.username}`;
@@ -70,16 +71,20 @@ function addUserToHtml(user) {
   const userHtmlElement = document.createElement("li");
   userList.appendChild(userHtmlElement);
   userHtmlElement.innerHTML = `<p id="user-id${user.id}">#${user.id}: ${user.name} ${user.username} </p>`;
+  const buttonElement = document.createElement("button");
+  buttonElement.innerText = "Edit"; // homework
+  userHtmlElement.appendChild(buttonElement); // homework
+  
 }
 
 // Homework
-// 1. usuwanie
 
 function removeClickedUser(event) {
+  if (event.target.nodeName === "P") {  //warunek dodany ze względu na button EDIT
   if (confirm("Are you sure you want to remove this user?") == true) {
     const clickedUser = event.target.id;
     const clickedUserTag = document.getElementById(clickedUser);
-    clickedUserTag.parentNode.remove();
+    clickedUserTag.parentNode.remove(); //usunięcie usera z DOM
 
     const userID = clickedUser.match(/\d/g).join(""); // z np.user-id1 wybieram cyfry, żeby mieć ID usera z tablicy currentStateOfApplication do usunięcia; ewentualny join, jeżeli liczba będzie dwucyfrowa
     const userIdAsNumber = userID * 1;
@@ -92,6 +97,7 @@ function removeClickedUser(event) {
       currentStateOfApplication.listOfUsers.splice(indexToRemove, 1); // usunięcie usera z currentStateOfApplication
     }
   }
+}
 }
 userList.addEventListener("click", removeClickedUser);
 
