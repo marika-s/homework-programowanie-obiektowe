@@ -70,34 +70,44 @@ function updateUserIdToHtml(id) {
 function addUserToHtml(user) {
   const userHtmlElement = document.createElement("li");
   userList.appendChild(userHtmlElement);
-  userHtmlElement.innerHTML = `<p id="user-id${user.id}">#${user.id}: ${user.name} ${user.username} </p>`;
-  const buttonElement = document.createElement("button");
-  buttonElement.innerText = "Edit"; // homework
-  userHtmlElement.appendChild(buttonElement); // homework
-  
+  userHtmlElement.innerHTML = `<p id="user-id${user.id}">#${user.id}: ${user.name} ${user.username} <button class="btn">Edit</button> </p>`; //homework
 }
 
-// Homework
+// Homework - delete
 
 function removeClickedUser(event) {
-  if (event.target.nodeName === "P") {  //warunek dodany ze względu na button EDIT
-  if (confirm("Are you sure you want to remove this user?") == true) {
-    const clickedUser = event.target.id;
-    const clickedUserTag = document.getElementById(clickedUser);
-    clickedUserTag.parentNode.remove(); //usunięcie usera z DOM
-
-    const userID = clickedUser.match(/\d/g).join(""); // z np.user-id1 wybieram cyfry, żeby mieć ID usera z tablicy currentStateOfApplication do usunięcia; ewentualny join, jeżeli liczba będzie dwucyfrowa
-    const userIdAsNumber = userID * 1;
-    removeUserFromApplicationState();
-
-    function removeUserFromApplicationState() {
-      let indexToRemove = currentStateOfApplication.listOfUsers.findIndex( //wyszukuje index z tablicy obiektów z szukanym ID usera
-        (data) => data.id === userIdAsNumber
-      );
-      currentStateOfApplication.listOfUsers.splice(indexToRemove, 1); // usunięcie usera z currentStateOfApplication
+  if (event.target.nodeName === "P") {
+    //warunek dodany ze względu na button EDIT
+    if (confirm("Are you sure you want to remove this user?") == true) {
+      const clickedUserTag = document.getElementById(event.target.id);
+      clickedUserTag.parentNode.remove(); //usunięcie usera z DOM
+      removeUserFromApplicationState(event);
     }
   }
 }
+
+function removeUserFromApplicationState(event) {
+  let indexToRemove = currentStateOfApplication.listOfUsers.findIndex(
+    //wyszukuje index z tablicy obiektów z szukanym ID usera
+    (data) => data.id === getUserIdFromHtmlTagID(event.target.id)
+  );
+  currentStateOfApplication.listOfUsers.splice(indexToRemove, 1); // usunięcie usera z currentStateOfApplication
 }
+
+function getUserIdFromHtmlTagID(eventDetails) {
+  const id = eventDetails.match(/\d/g).join("") * 1; //z np.user-id1 wybieram cyfry, żeby mieć ID usera z tablicy currentStateOfApplication; ewentualny join, jeżeli liczba będzie dwucyfrowa; *1 -> zamiana ze string na number;
+  return id;
+}
+
 userList.addEventListener("click", removeClickedUser);
 
+// Homework - edit
+
+function openForm(event) {
+const FormHtmlElement = document.createElement("form");
+event.target.parentNode.appendChild(FormHtmlElement);
+FormHtmlElement.innerHTML = '<label for="first-name">First name:</label><input id="first-name" type="text"><br><label for="last-name">Last name:</label><input id="last-name" type="text">'
+FormHtmlElement.setAttribute("class", "form");
+}
+
+userList.addEventListener("click", openForm);
