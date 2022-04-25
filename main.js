@@ -104,10 +104,11 @@ userList.addEventListener("click", removeClickedUser);
 // Homework - edit
 
 function openForm(event) {
+  if (event.target.nodeName === "BUTTON") {
 const FormHtmlElement = document.createElement("form");
 event.target.parentNode.appendChild(FormHtmlElement);
 FormHtmlElement.innerHTML = '<label for="first-name">First name:</label><input id="first-name" type="text"><br><label for="last-name">Last name:</label><input id="last-name" type="text">'
 FormHtmlElement.setAttribute("class", "form");
-}
+}}
 
 userList.addEventListener("click", openForm);
